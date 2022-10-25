@@ -19,7 +19,7 @@ class ProjectFactory extends Factory
         return [
             'title'=>'Moderne Website Portfolio',
             'description'=>'Website adaptable for all devices',
-            'link'=>'1',
+            'link'=>'https://github.com/abdelrhmanMohmaed/My-Portfolio',
             'photo'=>'avatar.png',
         ];
     }

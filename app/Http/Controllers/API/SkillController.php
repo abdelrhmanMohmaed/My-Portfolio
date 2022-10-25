@@ -39,7 +39,6 @@ class SkillController extends Controller
             'proficiency' => 'required',
             'service_id' => 'required',
         ]);
-        $skill = new Skill();
         $skill->name = $request->name;
         $skill->proficiency = $request->proficiency;
         $skill->service_id = $request->service_id;

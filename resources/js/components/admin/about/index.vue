@@ -24,7 +24,7 @@ const getAbout = async () => {
 }
 
 const getPhoto = () => {
-    let photo = "/img/avater.png";
+    let photo = "/img/upload/avatar.png";
     if (form.value.photo) {
         if (form.value.photo.indexOf('base64') != -1) {
             photo = form.value.photo;
@@ -93,11 +93,6 @@ const updateAbout = async () => {
                     <div class="titlebar">
                         <div class="titlebar_item">
                             <h1>About Us</h1>
-                        </div>
-                        <div class="titlebar_item">
-                            <div class="btn btn-secondary" @click.prevent="updateAbout">
-                                Save Changes
-                            </div>
                         </div>
                     </div>
                     <div class="card_wrapper">

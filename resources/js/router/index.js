@@ -9,7 +9,10 @@ import adminAboutIndex from '../components/admin/about/index.vue';
 import adminServiceIndex from '../components/admin/services/index.vue';
 import adminSkillIndex from '../components/admin/skills/index.vue';
 import adminEducationIndex from '../components/admin/educations/index.vue';
-import adminExperienceIndex from '../components/admin/experience/index.vue';
+import adminExperienceIndex from '../components/admin/experiences/index.vue';
+import adminProjectIndex from '../components/admin/projects/index.vue';
+import adminNewProjectIndex from '../components/admin/projects/new.vue';
+import adminEditProjectIndex from '../components/admin/projects/edit.vue';
 
 //Pages
 import homePageIndex from '../components/pages/home/index.vue';
@@ -69,7 +72,7 @@ const routes = [
             requestAuth: true,
         }
     },
-    // experience
+    // experiences
     {
         path: '/admin/experiences',
         name: 'AdminExperiences',
@@ -77,6 +80,34 @@ const routes = [
         meta: {
             requestAuth: true,
         }
+    },
+    // projects
+    {
+        path: '/admin/projects',
+        name: 'AdminProjects',
+        component: adminProjectIndex,
+        meta: {
+            requestAuth: true,
+        }
+    },
+    // projectsNew
+    {
+        path: '/admin/new/project',
+        name: 'AdminNewProjects',
+        component: adminNewProjectIndex,
+        meta: {
+            requestAuth: true,
+        }
+    },
+    // projectsEdit
+    {
+        path: '/admin/edit/project/:id',
+        name: 'AdminEditProjects',
+        component: adminEditProjectIndex,
+        meta: {
+            requestAuth: true,
+        },
+        props: true,
     },
     //Pages
     {

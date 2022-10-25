@@ -4,6 +4,7 @@ use App\Http\Controllers\API\AboutController;
 use App\Http\Controllers\API\AuthController;
 use App\Http\Controllers\API\EdcationController;
 use App\Http\Controllers\API\ExperinceController;
+use App\Http\Controllers\API\ProjectController;
 use App\Http\Controllers\API\ServiceController;
 use App\Http\Controllers\API\SkillController;
 use Illuminate\Http\Request;
@@ -62,4 +63,12 @@ Route::controller(ExperinceController::class)->group(function () {
     Route::post('store/experiences', 'store');
     Route::post('update/experiences/{experience}', 'update');
     Route::get('delete/experiences/{experience}', 'delete');
+});
+
+Route::controller(ProjectController::class)->group(function () {
+    Route::get('projects', 'index');
+    Route::get('project/{project}', 'show');
+    Route::post('store/projects', 'store');
+    Route::post('update/projects/{project}', 'update');
+    Route::get('delete/projects/{project}', 'delete');
 });
