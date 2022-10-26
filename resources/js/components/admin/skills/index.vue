@@ -38,8 +38,7 @@ const getServices = async () => {
 };
 const createSkill = async () => {
     await axios.post('/api/store/skills', form.value)
-        .then(response => {
-            console.log(response.data);
+        .then(response => { 
             getSkills();
             closeModel();
             toast.fire({

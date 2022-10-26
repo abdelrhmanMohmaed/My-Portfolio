@@ -11,8 +11,13 @@ import adminSkillIndex from '../components/admin/skills/index.vue';
 import adminEducationIndex from '../components/admin/educations/index.vue';
 import adminExperienceIndex from '../components/admin/experiences/index.vue';
 import adminProjectIndex from '../components/admin/projects/index.vue';
-import adminNewProjectIndex from '../components/admin/projects/new.vue';
+import adminCreateProjectIndex from '../components/admin/projects/create.vue';
 import adminEditProjectIndex from '../components/admin/projects/edit.vue';
+import adminTestimonialIndex from '../components/admin/testimonial/index.vue';
+import adminCreateTestimonial from '../components/admin/testimonial/create.vue';
+import adminEditTestimonial from '../components/admin/testimonial/edit.vue';
+import adminMessageIndex from '../components/admin/messages/index.vue';
+
 
 //Pages
 import homePageIndex from '../components/pages/home/index.vue';
@@ -90,11 +95,11 @@ const routes = [
             requestAuth: true,
         }
     },
-    // projectsNew
+    //Create project
     {
-        path: '/admin/new/project',
-        name: 'AdminNewProjects',
-        component: adminNewProjectIndex,
+        path: '/admin/create/project',
+        name: 'AdminCreateProjects',
+        component: adminCreateProjectIndex,
         meta: {
             requestAuth: true,
         }
@@ -108,6 +113,43 @@ const routes = [
             requestAuth: true,
         },
         props: true,
+    },
+    // testimonials
+    {
+        path: '/admin/testimonials',
+        name: 'AdminTestimonial',
+        component: adminTestimonialIndex,
+        meta: {
+            requestAuth: true,
+        }
+    },
+    // testimonialsNew
+    {
+        path: '/admin/create/testimonial',
+        name: 'AdminCreateTestimonials',
+        component: adminCreateTestimonial,
+        meta: {
+            requestAuth: true,
+        }
+    },
+    // testimonialsEdit
+    {
+        path: '/admin/edit/testimonial/:id',
+        name: 'AdminEditTestimonials',
+        component: adminEditTestimonial,
+        meta: {
+            requestAuth: true,
+        },
+        props: true,
+    },
+    //message
+    {
+        path: '/admin/messages',
+        name: 'AdminMessages',
+        component: adminMessageIndex,
+        meta: {
+            requestAuth: true,
+        }
     },
     //Pages
     {

@@ -1,22 +1,33 @@
 <script setup>
 import axios from "axios";
 import { onMounted, ref, } from "vue";
-import Base from '../layouts/base.vue';
 import { useRouter } from "vue-router";
+import Base from '../layouts/base.vue';
 
-let projects = ref([]);
+let testimonials = ref([]);
 let router = useRouter();
-
-onMounted(async () => {
-    getProjects();
+onMounted(() => {
+    getTestimonials();
 });
 
-const getProjects = async () => {
-    let response = await axios.get('/api/projects');
-    projects.value = response.data.projects;
+const getTestimonials = async () => {
+    let response = await axios.get('/api/testimonials');
+    testimonials.value = response.data.testimonials;
 }
 
-const deleteProject = (project) => {
+const ourImage = (img) => {
+    let photo = '/img/upload/' + img;
+    return photo;
+}
+
+const createTestimonial = () => {
+    router.push('/admin/create/testimonial')
+}
+const editTestimonial = (item) => {
+    router.push('/admin/edit/testimonial/' + item)
+}
+
+const deleteTestinonial = (testinonial) => {
     Swal.fire({
         title: 'Are you sure ?',
         text: "You can't go back",
@@ -27,29 +38,19 @@ const deleteProject = (project) => {
         confirmButtonText: 'Yes, delete it',
     }).then((result) => {
         if (result.value) {
-            axios.get('/api/delete/projects/' + project.id).then(() => {
+            axios.get('/api/delete/testimonials/' + testinonial.id).then(() => {
                 Swal.fire(
                     'Delete',
-                    'Project delete successfully',
+                    'Testinonial delete successfully',
                     'success'
                 );
-                getProjects();
+                getTestimonials();
             })
         }
     });
 }
 
-const editModal = (id) => {
-    router.push('/admin/edit/project/' + id);
-}
 
-const ourImage = (img) => {
-    return '/img/upload/' + img;
-}
-
-const createProject = () => {
-    router.push('/admin/create/project');
-};
 
 </script>
 
@@ -58,16 +59,16 @@ const createProject = () => {
     <main class="main">
         <div class="main__sideNav"></div>
         <div class="main__content">
-            <!--==================== PROJECTS ====================-->
-            <section class="projects section" id="projects">
-                <div class="skills_container">
+            <!--==================== TESTIMONIALS ====================-->
+            <section class="testimonials section" id="testimonials">
+                <div class="testimonials_container">
                     <div class="titlebar">
                         <div class="titlebar_item">
-                            <h1>Projects </h1>
+                            <h1>Testimonials </h1>
                         </div>
                         <div class="titlebar_item">
-                            <div class="btn btn__open--modal" @click="createProject()">
-                                New Project
+                            <div class="btn btn__open--modal" @click="createTestimonial">
+                                New Testimonial
                             </div>
                         </div>
                     </div>
@@ -97,31 +98,32 @@ const createProject = () => {
                             </div>
                             <div class="relative">
                                 <i class="table_search-input--icon fas fa-search "></i>
-                                <input class="table_search--input" type="text" placeholder="Search Project">
+                                <input class="table_search--input" type="text" placeholder="Search Testimonial">
                             </div>
                         </div>
 
-                        <div class="project_table-heading">
-                            <p>Image</p>
-                            <p>Title</p>
-                            <p>Description</p>
-                            <p>Link</p>
+                        <div class="testimonial_table-heading">
+                            <p>Photo</p>
+                            <p>name</p>
+                            <p>Function</p>
+                            <p>Testimony</p>
+                            <p>Rating</p>
                             <p>Actions</p>
                         </div>
                         <!-- item 1 -->
-                        <div class="project_table-items" v-for="item in projects" :key="item.key">
+                        <div class="testimonial_table-items" v-for="item in testimonials" :key="item.id">
                             <p>
-                                <img :src="ourImage(item.photo)" alt="" class="project_img-list">
+                                <img :src="ourImage(item.photo)" alt="" class="testimonial_img-list">
                             </p>
-                            <p>{{ item.title }}</p>
-                            <p>{{ item.description }}</p>
-                            <a :href="item.link" target="_blank">{{ item.title }}</a>
+                            <p>{{ item.name }}</p>
+                            <p>{{ item.function }}</p>
+                            <p>{{ item.testimony }}</p>
+                            <p>{{ item.rating }}/5</p>
                             <div>
-
-                                <button class="btn-icon success" @click="editModal(item.id)">
+                                <button class="btn-icon success" @click="editTestimonial(item.id)">
                                     <i class="fas fa-pencil-alt"></i>
                                 </button>
-                                <button class="btn-icon danger" @click="deleteProject(item)">
+                                <button class="btn-icon danger" @click="deleteTestinonial(item)">
                                     <i class="far fa-trash-alt"></i>
                                 </button>
                             </div>
@@ -131,6 +133,9 @@ const createProject = () => {
 
                 </div>
             </section>
+
+
+
         </div>
     </main>
 </template>

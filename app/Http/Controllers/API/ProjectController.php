@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Models\Project;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
-use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Facades\Image;
 
 class ProjectController extends Controller
@@ -81,13 +80,15 @@ class ProjectController extends Controller
             $img->save($upload_path . $name);
 
             if (File::exists($image)) {
-                @unlink($image);
+                if ($project->photo != 'avatarProject.png') {
+                    @unlink($image);
+                }
             } else {
                 $name = $project->photo;
             }
         }
 
-        $project->photo = $name;
+        $project->photo = $name ?? $project->photo;
         $project->save();
     }
 

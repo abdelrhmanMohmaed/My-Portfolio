@@ -20,7 +20,7 @@ class ProjectFactory extends Factory
             'title'=>'Moderne Website Portfolio',
             'description'=>'Website adaptable for all devices',
             'link'=>'https://github.com/abdelrhmanMohmaed/My-Portfolio',
-            'photo'=>'avatar.png',
+            'photo'=>'avatarProject.png',
         ];
     }
 }

@@ -5,29 +5,13 @@ import Base from '../layouts/base.vue';
 import { useRouter } from "vue-router";
 
 let router = useRouter();
-
 let form = ref({
-    title: "",
-    link: "",
-    description: "",
-    photo: "",
+    name: '',
+    function: '',
+    testimony: '',
+    rating: '',
+    photo: '',
 });
-
-onMounted(async () => {
-    getProject();
-});
-
-const props = defineProps({
-    id: {
-        type: String,
-        default: '',
-    }
-})
-
-const getProject = async () => {
-    let response = await axios.get(`/api/project/${props.id}`);
-    form.value = response.data.project;
-};
 
 const getPhoto = () => {
     let photo = "/img/upload/avatarProject.png";
@@ -59,54 +43,58 @@ const changePhoto = (e) => {
     reader.readAsDataURL(file);
 }
 
-const updateProject = async () => {
-    await axios.post(`/api/update/projects/${form.value.id}`, form.value)
+const storeTestimonial = async () => {
+    await axios.post('/api/store/testimonials', form.value)
         .then(response => {
-            router.push('/admin/projects');
-            Swal.fire({
-                icon: "success",
-                title: "Update Project successfuly",
+            router.push('/admin/testimonials');
+            toast.fire({
+                icon: 'success',
+                title: 'Server add successfully',
             });
         });
 }
+
 </script>
+
 <template>
     <Base />
     <main class="main">
         <div class="main__sideNav"></div>
         <div class="main__content">
-
-            <section class="about section" id="project">
+            <!--===================ADD TESTIMONIAL ====================-->
+            <section class="about section" id="testimonial">
                 <div class="about_container">
                     <div class="titlebar">
                         <div class="titlebar_item">
-                            <h1>Edit Project</h1>
+                            <h1>Add Testimonial</h1>
                         </div>
                     </div>
                     <div class="card_wrapper">
                         <div class="wrapper_left">
                             <div class="card">
 
-                                <p>Title</p>
-                                <input type="text" class="input" v-model="form.title" />
+                                <p>Name</p>
+                                <input type="text" class="input" v-model="form.name" />
 
-                                <p>Description</p>
-                                <textarea cols="10" rows="5" v-model="form.description"></textarea>
+                                <p>Function</p>
+                                <input type="text" class="input" v-model="form.function" />
 
-                                <p>Link</p>
-                                <input type="text" class="input" v-model="form.link" />
+                                <p>Testimony</p>
+                                <textarea cols="10" rows="5" v-model="form.testimony"></textarea>
 
                             </div>
                         </div>
 
                         <div class="wrapper_right ">
                             <div class="card">
-                                <div class="project_img-container">
-                                    <img :src="getPhoto()" alt="" class="project_img">
+                                <p>Photo</p>
+                                <div class="testimonial_img-container">
+                                    <img :src="getPhoto()" alt="" class="testimonial_img">
                                 </div>
-                                <br>
                                 <input type="file" id="fileimg" @change="changePhoto" />
-                                <br><br><br>
+                                <br>
+                                <p>Rating ?/5</p>
+                                <input type="number" class="input" min="1" max="5" v-model="form.rating" />
                             </div>
                         </div>
 
@@ -116,8 +104,8 @@ const updateProject = async () => {
 
                         </div>
                         <div class="titlebar_item">
-                            <div class="btn btn-secondary" @click="updateProject()">
-                                Update Project
+                            <div class="btn btn-secondary" @click="storeTestimonial()">
+                                Save Testimonial
                             </div>
                         </div>
                     </div>

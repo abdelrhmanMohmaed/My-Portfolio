@@ -2,21 +2,26 @@
 import axios from "axios";
 import { onMounted, ref, } from "vue";
 import Base from '../layouts/base.vue';
-import { useRouter } from "vue-router";
 
-let projects = ref([]);
-let router = useRouter();
-
-onMounted(async () => {
-    getProjects();
+let messages = ref([]);
+onMounted(() => {
+    getMessages();
 });
 
-const getProjects = async () => {
-    let response = await axios.get('/api/projects');
-    projects.value = response.data.projects;
+const getMessages = async () => {
+    let response = await axios.get('/api/messages');
+    messages.value = response.data.messages;
+}
+const toggleStatus = (messageId) => {
+    axios.get('/api/messages/toggle/' + messageId);
+    getMessages();
+    toast.fire({
+        icon: 'success',
+        title: 'Message Update successfully',
+    });
 }
 
-const deleteProject = (project) => {
+const deleteMessage = (messageId) => {
     Swal.fire({
         title: 'Are you sure ?',
         text: "You can't go back",
@@ -27,29 +32,18 @@ const deleteProject = (project) => {
         confirmButtonText: 'Yes, delete it',
     }).then((result) => {
         if (result.value) {
-            axios.get('/api/delete/projects/' + project.id).then(() => {
+            axios.get('/api/delete/message/' + messageId.id).then(() => {
                 Swal.fire(
                     'Delete',
-                    'Project delete successfully',
+                    'Message delete successfully',
                     'success'
                 );
-                getProjects();
+                getMessages();
             })
         }
     });
 }
 
-const editModal = (id) => {
-    router.push('/admin/edit/project/' + id);
-}
-
-const ourImage = (img) => {
-    return '/img/upload/' + img;
-}
-
-const createProject = () => {
-    router.push('/admin/create/project');
-};
 
 </script>
 
@@ -58,17 +52,16 @@ const createProject = () => {
     <main class="main">
         <div class="main__sideNav"></div>
         <div class="main__content">
-            <!--==================== PROJECTS ====================-->
-            <section class="projects section" id="projects">
-                <div class="skills_container">
+
+            <!--==================== MESSAGES ====================-->
+            <section class="messages section" id="messages">
+                <div class="messages_container">
                     <div class="titlebar">
                         <div class="titlebar_item">
-                            <h1>Projects </h1>
+                            <h1>Messages </h1>
                         </div>
                         <div class="titlebar_item">
-                            <div class="btn btn__open--modal" @click="createProject()">
-                                New Project
-                            </div>
+
                         </div>
                     </div>
 
@@ -97,38 +90,40 @@ const createProject = () => {
                             </div>
                             <div class="relative">
                                 <i class="table_search-input--icon fas fa-search "></i>
-                                <input class="table_search--input" type="text" placeholder="Search Project">
+                                <input class="table_search--input" type="text" placeholder="Search Message">
                             </div>
                         </div>
 
-                        <div class="project_table-heading">
-                            <p>Image</p>
-                            <p>Title</p>
+                        <div class="message_table-heading">
+                            <p>Name</p>
+                            <p>Email</p>
+                            <p>Subject</p>
                             <p>Description</p>
-                            <p>Link</p>
+                            <p>Status</p>
                             <p>Actions</p>
                         </div>
                         <!-- item 1 -->
-                        <div class="project_table-items" v-for="item in projects" :key="item.key">
-                            <p>
-                                <img :src="ourImage(item.photo)" alt="" class="project_img-list">
-                            </p>
-                            <p>{{ item.title }}</p>
+                        <div class="message_table-items" v-for="item in messages" :key="item.id">
+                            <p>{{ item.name }}</p>
+                            <p>{{ item.email }}</p>
+                            <p>{{ item.subject }}</p>
                             <p>{{ item.description }}</p>
-                            <a :href="item.link" target="_blank">{{ item.title }}</a>
+                            <p @click="toggleStatus(item.id)">
+                                <span class="badge_read" v-if="item.status == 0">
+                                    Read
+                                </span>
+                                <span class="badge_unread btn-danger" v-else>
+                                    Unread
+                                </span>
+                            </p>
                             <div>
-
-                                <button class="btn-icon success" @click="editModal(item.id)">
-                                    <i class="fas fa-pencil-alt"></i>
-                                </button>
-                                <button class="btn-icon danger" @click="deleteProject(item)">
+                                <button class="btn-icon danger" @click="deleteMessage(item)">
                                     <i class="far fa-trash-alt"></i>
                                 </button>
                             </div>
                         </div>
 
                     </div>
-
                 </div>
             </section>
         </div>

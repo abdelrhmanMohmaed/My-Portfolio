@@ -5,16 +5,18 @@ import Base from '../layouts/base.vue';
 import { useRouter } from "vue-router";
 
 let router = useRouter();
+let testimonial = ref([]);
 
 let form = ref({
-    title: "",
-    link: "",
-    description: "",
+    name: "",
+    function: "",
+    rating: "",
+    testimony: "",
     photo: "",
 });
 
 onMounted(async () => {
-    getProject();
+    getTestimonial();
 });
 
 const props = defineProps({
@@ -24,9 +26,9 @@ const props = defineProps({
     }
 })
 
-const getProject = async () => {
-    let response = await axios.get(`/api/project/${props.id}`);
-    form.value = response.data.project;
+const getTestimonial = async () => {
+    let response = await axios.get(`/api/testimonials/${props.id}`);
+    form.value = response.data.testimonial;
 };
 
 const getPhoto = () => {
@@ -59,54 +61,58 @@ const changePhoto = (e) => {
     reader.readAsDataURL(file);
 }
 
-const updateProject = async () => {
-    await axios.post(`/api/update/projects/${form.value.id}`, form.value)
+
+const updateTestimonial = async () => {
+    await axios.post(`/api/update/testimonials/${form.value.id}`, form.value)
         .then(response => {
-            router.push('/admin/projects');
+            router.push('/admin/testimonials');
             Swal.fire({
                 icon: "success",
-                title: "Update Project successfuly",
+                title: "Update Testimonial successfuly",
             });
         });
 }
+
 </script>
 <template>
     <Base />
     <main class="main">
         <div class="main__sideNav"></div>
         <div class="main__content">
-
-            <section class="about section" id="project">
+            <!--===================EDIT TESTIMONIAL ====================-->
+            <section class="about section" id="testimonial">
                 <div class="about_container">
                     <div class="titlebar">
                         <div class="titlebar_item">
-                            <h1>Edit Project</h1>
+                            <h1>Edit Testimonial</h1>
                         </div>
                     </div>
                     <div class="card_wrapper">
                         <div class="wrapper_left">
                             <div class="card">
 
-                                <p>Title</p>
-                                <input type="text" class="input" v-model="form.title" />
+                                <p>Name</p>
+                                <input type="text" class="input" v-model="form.name" />
 
-                                <p>Description</p>
-                                <textarea cols="10" rows="5" v-model="form.description"></textarea>
+                                <p>Function</p>
+                                <input type="text" class="input" v-model="form.function" />
 
-                                <p>Link</p>
-                                <input type="text" class="input" v-model="form.link" />
+                                <p>Testimony</p>
+                                <textarea cols="10" rows="5" v-model="form.testimony"></textarea>
 
                             </div>
                         </div>
 
                         <div class="wrapper_right ">
                             <div class="card">
-                                <div class="project_img-container">
-                                    <img :src="getPhoto()" alt="" class="project_img">
+                                <p>Photo</p>
+                                <div class="testimonial_img-container">
+                                    <img :src="getPhoto()" alt="" class="testimonial_img">
                                 </div>
-                                <br>
                                 <input type="file" id="fileimg" @change="changePhoto" />
-                                <br><br><br>
+                                <br>
+                                <p>Rating ?/5</p>
+                                <input type="text" class="input" v-model="form.rating" />
                             </div>
                         </div>
 
@@ -116,8 +122,8 @@ const updateProject = async () => {
 
                         </div>
                         <div class="titlebar_item">
-                            <div class="btn btn-secondary" @click="updateProject()">
-                                Update Project
+                            <div class="btn btn-secondary" @click="updateTestimonial">
+                                Update Testimonial
                             </div>
                         </div>
                     </div>
