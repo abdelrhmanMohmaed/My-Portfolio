@@ -17,7 +17,7 @@ const toggleStatus = (messageId) => {
     getMessages();
     toast.fire({
         icon: 'success',
-        title: 'Message Update successfully',
+        title: 'Status Update successfully',
     });
 }
 
@@ -59,9 +59,6 @@ const deleteMessage = (messageId) => {
                     <div class="titlebar">
                         <div class="titlebar_item">
                             <h1>Messages </h1>
-                        </div>
-                        <div class="titlebar_item">
-
                         </div>
                     </div>
 

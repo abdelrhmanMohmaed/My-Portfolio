@@ -38,7 +38,7 @@ const getServices = async () => {
 };
 const createSkill = async () => {
     await axios.post('/api/store/skills', form.value)
-        .then(response => { 
+        .then(response => {
             getSkills();
             closeModel();
             toast.fire({
@@ -48,11 +48,13 @@ const createSkill = async () => {
 
         });
 };
+
 const editModal = (skill) => {
     editMode.value = true;
     showModal.value = !showModal.value;
     form.value = skill;
-}
+};
+
 const updateSkill = async () => {
     await axios.post('/api/update/skills/' + form.value.id, form.value)
         .then(() => {
@@ -63,7 +65,7 @@ const updateSkill = async () => {
                 title: 'Skill update successfully',
             });
         });
-}
+};
 
 const deleteSkill = (skillId) => {
     Swal.fire({
@@ -86,7 +88,7 @@ const deleteSkill = (skillId) => {
             })
         }
     });
-}
+};
 
 </script>
 
@@ -145,12 +147,13 @@ const deleteSkill = (skillId) => {
                         </div>
                         <!-- item 1 -->
                         <div class="skill_table-items" v-for="item in skills" :key="item.id">
-                            <p>{{item.name}}</p>
+                            <p>{{ item.name }}</p>
                             <div class="table_skills-bar">
-                                <span class="table_skills-percentage" :style="{'width': `${item.proficiency}%`}"></span>
-                                <strong>{{item.proficiency}}%</strong>
+                                <span class="table_skills-percentage"
+                                    :style="{ 'width': `${item.proficiency}%` }"></span>
+                                <strong>{{ item.proficiency }}%</strong>
                             </div>
-                            <p>{{item.service.name}}</p>
+                            <p>{{ item.service.name }}</p>
                             <div>
                                 <button class="btn-icon success" @click="editModal(item)">
                                     <i class="fas fa-pencil-alt"></i>
@@ -165,11 +168,11 @@ const deleteSkill = (skillId) => {
 
                 </div>
                 <!-------------- SERVICES MODAL --------------->
-                <div class="modal main__modal" :class="{show:showModal}">
+                <div class="modal main__modal" :class="{ show: showModal }">
                     <div class="modal__content">
                         <span class="modal__close btn__close--modal" @click="closeModel()">×</span>
-                        <h3 class="modal__title" v-show="editMode== false">Add Skill</h3>
-                        <h3 class="modal__title" v-show="editMode== true">Update Skill</h3>
+                        <h3 class="modal__title" v-show="editMode == false">Add Skill</h3>
+                        <h3 class="modal__title" v-show="editMode == true">Update Skill</h3>
                         <hr class="modal_line"><br>
                         <form @submit.prevent="editMode ? updateSkill() : createSkill()">
                             <div>
@@ -181,9 +184,9 @@ const deleteSkill = (skillId) => {
 
                                 <p>Service</p>
                                 <select class="inputSelect" name="" id="" v-model="form.service_id">
-                                    <option disabled>Select service</option>
+                                    <option disabled selected>Select service</option>
                                     <option :value="service.id" v-for="service in services" :key="service.id">
-                                        {{ service.name}}
+                                        {{ service.name }}
                                     </option>
                                 </select>
                             </div>
@@ -193,8 +196,8 @@ const deleteSkill = (skillId) => {
                                 <button class="btn mr-2 btn__close--modal" @click="closeModel()">
                                     Cancel
                                 </button>
-                                <button class="btn btn-secondary" v-show="editMode== false">Save</button>
-                                <button class="btn btn-secondary" v-show="editMode== true">Update</button>
+                                <button class="btn btn-secondary" v-show="editMode == false">Save</button>
+                                <button class="btn btn-secondary" v-show="editMode == true">Update</button>
                             </div>
                         </form>
                     </div>

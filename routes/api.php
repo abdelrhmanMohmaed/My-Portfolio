@@ -9,6 +9,7 @@ use App\Http\Controllers\API\ProjectController;
 use App\Http\Controllers\API\ServiceController;
 use App\Http\Controllers\API\SkillController;
 use App\Http\Controllers\API\TestimonialController;
+use App\Http\Controllers\API\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -87,4 +88,11 @@ Route::controller(MessageController::class)->group(function () {
     Route::get('messages', 'index');
     Route::get('messages/toggle/{message}', 'toggleStatus');
     Route::get('delete/message/{message}', 'delete');
+});
+
+Route::controller(UserController::class)->group(function () {
+    Route::get('users', 'index');
+    Route::get('roles', 'role');
+    Route::post('store/user', 'store');
+    Route::get('delete/user/{user}', 'delete');
 });
