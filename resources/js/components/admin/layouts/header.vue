@@ -1,16 +1,23 @@
 <script setup>
-import { ref } from "vue";
+import { onMounted, ref } from "vue";
 import { useRouter } from "vue-router";
 
 const router = useRouter();
 const logout = () => {
-    localStorage.removeItem('token');
+    localStorage.removeItem('token','name');
     router.push('/');
 }
-
+onMounted(() => {
+    getName();
+});
+const getName = () => {
+    let name = localStorage.getItem('name');
+    return name;
+}
 const showNavHeader = ref(false);
 
 const openNavHeader = () => {
+
     showNavHeader.value = !showNavHeader.value;
 }
 </script>
@@ -31,7 +38,7 @@ const openNavHeader = () => {
                 <img class="header_profile-img" src="assets/img/avatar.jpg" alt="" />
             </div>
             <p class="header_profile-name">
-                Zander Ford
+               {{ getName()}}
             </p>
 
         </div>
@@ -48,20 +55,20 @@ const openNavHeader = () => {
 
     <!-- Header Profile -->
     <div>
-        <span class="header_profile-name--nav" v-bind:class="{show:showNavHeader}">
+        <span class="header_profile-name--nav" v-bind:class="{ show: showNavHeader }">
             <span class="header_profile-name--nav--pointer">
                 <i class="fas fa-sort-up"></i>
             </span>
             <ul class="header_profile-name--nav--list">
                 <li class="header_profile-name--nav--item">
-                    <a class="header_profile-name--nav--link" href="#">
+                    <router-link class="header_profile-name--nav--link" to="/users/profile">
                         Profile
-                    </a>
+                    </router-link>
                 </li>
                 <li class="header_profile-name--nav--item">
-                    <a class="header_profile-name--nav--link" href="#">
+                    <router-link class="header_profile-name--nav--link" to="/admin/messages">
                         Message
-                    </a>
+                    </router-link>
                 </li>
                 <li class="header_profile-name--nav--item">
                     <a class="header_profile-name--nav--link" href="#" @click="logout">

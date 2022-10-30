@@ -21,6 +21,7 @@ import adminUsersIndex from '../components/admin/users/index.vue';
 
 
 
+
 //Pages
 import homePageIndex from '../components/pages/home/index.vue';
 
@@ -79,7 +80,7 @@ const routes = [
             requestAuth: true,
         }
     },
-    // experiences
+    //experiences
     {
         path: '/admin/experiences',
         name: 'AdminExperiences',
@@ -88,7 +89,7 @@ const routes = [
             requestAuth: true,
         }
     },
-    // projects
+    //projects
     {
         path: '/admin/projects',
         name: 'AdminProjects',
@@ -106,7 +107,7 @@ const routes = [
             requestAuth: true,
         }
     },
-    // projectsEdit
+    //projectsEdit
     {
         path: '/admin/edit/project/:id',
         name: 'AdminEditProjects',
@@ -116,7 +117,7 @@ const routes = [
         },
         props: true,
     },
-    // testimonials
+    //testimonials
     {
         path: '/admin/testimonials',
         name: 'AdminTestimonial',
@@ -125,7 +126,7 @@ const routes = [
             requestAuth: true,
         }
     },
-    // testimonialsNew
+    //testimonialsNew
     {
         path: '/admin/create/testimonial',
         name: 'AdminCreateTestimonials',
@@ -134,7 +135,7 @@ const routes = [
             requestAuth: true,
         }
     },
-    // testimonialsEdit
+    //testimonialsEdit
     {
         path: '/admin/edit/testimonial/:id',
         name: 'AdminEditTestimonials',

@@ -2,7 +2,9 @@
 import axios from "axios";
 import { onMounted, ref, } from "vue";
 import Base from '../layouts/base.vue';
+import { useRouter } from "vue-router";
 
+const router = useRouter();
 let users = ref([]);
 let roles = ref([]);
 const showModal = ref(false);
@@ -24,7 +26,6 @@ let form = ref({
     role_id: '',
     password_confirmation: '',
 });
-
 
 const openModal = () => {
     showModal.value = !showModal.value;
@@ -75,7 +76,7 @@ const editUser = (user) => {
 };
 
 const updateUser = async () => {
-    await axios.post('/api/update/users/' + form.value.id, form.value)
+    await axios.post('/api/update/user/' + form.value.id, form.value)
         .then(() => {
             getUsers();
             closeModal();
@@ -84,6 +85,8 @@ const updateUser = async () => {
                 title: 'Server update successfully',
             });
         });
+    localStorage.removeItem('token', 'name');
+    router.push('/');
 }
 
 const deleteUser = (userId) => {
@@ -195,7 +198,7 @@ const deleteUser = (userId) => {
                     <h3 class="modal__title" v-show="editMode == false">Add User</h3>
                     <h3 class="modal__title" v-show="editMode == true">Update User</h3>
                     <hr class="modal_line"><br>
-                    <form @submit.prevent="storeUser()">
+                    <form @submit.prevent="editMode ? updateUser() : storeUser()">
                         <div>
                             <p>Name</p>
                             <input type="text" class="input" v-model="form.name" />

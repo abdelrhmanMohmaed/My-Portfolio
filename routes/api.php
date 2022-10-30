@@ -94,5 +94,6 @@ Route::controller(UserController::class)->group(function () {
     Route::get('users', 'index');
     Route::get('roles', 'role');
     Route::post('store/user', 'store');
+    Route::post('update/user/{user}', 'update');
     Route::get('delete/user/{user}', 'delete');
 });
